@@ -147,6 +147,13 @@ class FireGento_Pdf_Model_Items_Default extends Mage_Sales_Model_Order_Pdf_Items
             '_width'    => 70
         );
 
+        $transport = new Varien_Object();
+        $transport->setData(array('columns' => $columns,'object' => $this));
+        
+        Mage::dispatchEvent('firegento_pdf_prepare_columns_after', array('transport' => $transport));
+        $columns = $transport->getData('columns');
+
+
         // draw columns in specified order
         $columnsOrder = explode(',', Mage::getStoreConfig('sales_pdf/invoice/item_price_column_order'));
         // draw starting from right
